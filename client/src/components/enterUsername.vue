@@ -13,7 +13,6 @@
             <!--Body-->
             <div class="modal-body text-center mb-1">
 
-
                 <div class="md-form ml-0 mr-0">
                 <input type="text" id="form29" class="form-control form-control-sm validate ml-0" placeholder="Username">
                 <label data-error="wrong" data-success="right" for="form29" class="ml-0"></label>
