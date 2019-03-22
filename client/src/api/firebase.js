@@ -1,3 +1,4 @@
+
  import {
    initializeApp
  } from "firebase";
@@ -14,3 +15,4 @@
  const db = app.firestore()
 
  export default db
+
