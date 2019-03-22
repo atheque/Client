@@ -86,7 +86,7 @@
                             <option value="8">Eight</option>
                             <option value="9">Nine</option>
                             <option value="10">Ten</option>
-                        </select>  
+                        </select>
                     </div>
 
                     <div class="text-center form-sm mt-2">
@@ -111,20 +111,20 @@
 
         <div class="text-center">
         <a href="" class="btn btn-default btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">Create Room</a>
-        </div> 
+        </div>
     </div>
 </template>
 
 <script>
 export default {
-    data(){
-        return {
-            room: 'public',
-            username: '',
-            name: '' || `${this.username}'s Room's`,
-            player: '',
-            password: '',
-        }
+  data () {
+    return {
+      room: 'public',
+      username: '',
+      name: '' || `${this.username}'s Room's`,
+      player: '',
+      password: ''
     }
+  }
 }
 </script>
