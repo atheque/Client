@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="container">
-      <button>ok</button>
       <div class="row-sm-2">
         <!--  -->
         <div class="room col-md-9">
@@ -12,18 +11,27 @@
                 <div class="col-md-12 form-group">
                   <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur porro sapiente impedit animi repudiandae quod asperiores voluptas iure omnis dolore, recusandae voluptatibus, nostrum ex quos? Eligendi necessitatibus sit autem incidunt, aliquid tenetur aspernatur, mollitia qui repellat cum officiis delectus ex nostrum quia soluta perspiciatis sunt ab ea eos sequi animi?</p>
                 </div>
-                <div class="jawaban jawabA col-md-6 form-group">
-                  <h1>A</h1>
-                </div>
-                <div class="jawaban jawabA col-md-6 form-group">
-                  <h1>b</h1>
-                </div>
-                <div class="jawaban jawabA col-md-6 form-group">
-                  <h1>c</h1>
-                </div>
-                <div class="jawaban jawabA col-md-6 form-group">
-                  <h1>d</h1>
-                </div>
+                <!-- <div class="jawaban jawabA col-md-6 form-group"> -->
+                <button
+                  type="button"
+                  class="jawaban jawabA col-md-6 form-group btn btn-outline-default waves-effect"
+                >Default</button>
+                <button
+                  type="button"
+                  class="jawaban jawabA col-md-6 form-group btn btn-outline-default waves-effect"
+                >Default</button>
+                <button
+                  type="button"
+                  class="jawaban jawabA col-md-6 form-group btn btn-outline-default waves-effect"
+                >Default</button>
+                <button
+                  type="button"
+                  class="jawaban jawabA col-md-6 form-group btn btn-outline-default waves-effect"
+                >Default</button>
+
+                <!-- <div class="jawaban jawabA col-md-6 form-group">
+                  <h1>D</h1>
+                </div>-->
               </div>
             </div>
           </div>
@@ -33,7 +41,7 @@
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">
-                <span class="glyphicon glyphicon-circle-arrow-right"></span>friends online
+                <span class="glyphicon glyphicon-circle-arrow-right"></span>Player list
               </h3>
             </div>
 
@@ -42,6 +50,44 @@
                 <h5>{{item.username}}</h5>
               </div>
             </div>
+
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="glyphicon glyphicon-circle-arrow-right"></span>CHAT
+              </h3>
+            </div>
+
+            <div class="panel-footer">
+              <div>
+                <!-- <input
+                  type="text"
+                  class="form-control"
+                  v-model="username"
+                  placeholder="your username ..."
+                >-->
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="chat"
+                  placeholder="your messege ..."
+                >
+              </div>
+              <a v-on:click="chatting()">chat now</a>
+            </div>
+
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="glyphicon glyphicon-circle-arrow-right"></span>CHAT
+              </h3>
+            </div>
+
+            <div class="panel-footer">
+              <div style="display:flex" v-for="pesan in messege">
+                <h4>{{pesan.username}}:</h4>
+                <h4>{{pesan.messege}}</h4>
+              </div>
+            </div>
+            <!-- ====================== -->
           </div>
         </div>
       </div>
@@ -54,11 +100,27 @@ import db from "@/api/firebase.js";
 export default {
   data() {
     return {
-      data: []
+      data: [],
+      messege: [],
+      username: "",
+      chat: ""
     };
   },
   methods: {
-    tambah() {}
+    tambah() {},
+    chatting() {
+      db.collection("online")
+        .add({
+          username: this.username,
+          messege: this.chat
+        })
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error);
+        });
+    }
   },
   beforeMount() {
     db.collection("online")
@@ -66,7 +128,13 @@ export default {
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           console.log(`${doc.id} => ${doc.data()}`);
+          let temp = doc.data();
           this.data.push(doc.data());
+          var obj = {
+            username: temp.username,
+            messege: temp.messege
+          };
+          this.messege.push(obj);
         });
       });
   }
@@ -122,5 +190,7 @@ body {
 .panel-body .radio label,
 .panel-body .checkbox label {
   display: block;
+}
+.roomChat {
 }
 </style>
