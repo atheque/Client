@@ -3,6 +3,7 @@
     <my-navbar
       @show-modal="showModal('username')"/>
     <username-modal/>
+    <room-list/>
   </div>
 </template>
 
@@ -13,12 +14,14 @@
 import MyNavbar from '@/components/navbar.vue'
 import UsernameModal from '@/components/enterUsername.vue'
 import { mapMutations, mapState, mapActions } from 'vuex'
+import RoomList from '@/components/roomList.vue'
 
 export default {
   name: 'home',
   components: {
     MyNavbar,
-    UsernameModal
+    UsernameModal,
+    RoomList
   },
   data() {
     return {
@@ -42,7 +45,6 @@ export default {
     ]),
     showModal (param) {
       if(param === 'username') {
-        console.log(param)
         $('#modalLoginAvatar').modal('toggle')
       }
     }
