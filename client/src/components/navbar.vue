@@ -8,15 +8,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
             <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
+            <li v-if="isLogin" class="nav-item">
+                <a class="nav-link" href="#" @click.prevent="" style="cursor: default">
+                <i class="fas fa-user"></i>{{username}}</a>
+            </li>
+            <li v-if="isLogin" class="nav-item active">
                 <a class="nav-link" href="#">
                     <i class="fas fa-door-open"></i> Create
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
+            <li v-if="!isLogin" class="nav-item">
+                <a class="nav-link" href="#" @click.prevent="$emit('show-modal')">
                 <i class="fas fa-user"></i>Username</a>
+            </li>
+            <li v-if="isLogin" class="nav-item">
+                <a class="nav-link" href="#" @click.prevent="logout">
+                <i class="fas fa-sign-out-alt"></i>Logout</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">
@@ -27,3 +35,39 @@
     </nav>
     <!--/.Navbar -->
 </template>
+
+<script>
+
+import { mapMutations, mapState, mapActions } from 'vuex'
+
+export default {
+    data() {
+        return {
+
+        }
+    },
+    computed: {
+        ...mapState([
+            'isLogin',
+            'username'
+        ])
+    },
+    methods: {
+        ...mapMutations([
+            'SET_LOGIN',
+            'SET_USERNAME'
+        ]),
+        ...mapActions([
+            'validateForm',
+            'updateStatus'
+        ]),
+        logout() {
+            this.updateStatus({
+                username: localStorage.getItem('username'), 
+                status: false
+            })
+        }
+    }
+}
+
+</script>
