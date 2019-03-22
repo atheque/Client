@@ -14,20 +14,19 @@
                 <div class="card-header col-sm-2">Players</div>
                 </div>
                 
-                <div class="clickable">
-                    <div style="display:flex; z-index:-1">
+                <div v-for="(room, index) in rooms" :key="index" class="clickable">
+                    <div v-if="room.currentPlayer > 0 || room.currentPlayer === room.maxPlayer" style="display:flex; z-index:-1">
                         <div class="card col-sm-2" style="z-index: -1" >
-                            <div class="card-body">1</div>
+                            <div class="card-body">{{ index + 1 }}</div>
                         </div>
 
                         <div class="card col-sm-8">
-                            <div class="card-body">tes</div>
+                            <div class="card-body">{{ room.name }}</div>
                         </div>
                         
                         <div class="card col-sm-2">
-                            <div class="card-body">9</div>
+                            <div class="card-body">{{ room.currentPlayer }} / {{ room.maxPlayer }} </div>
                         </div>
-                        
                         </div>
                     </div>
                 </div>
@@ -37,6 +36,14 @@
         </div>
     </div>
 </template>
+
+<script>
+
+export default {
+    props: ['rooms']
+}
+
+</script>
 
 <style scoped>
 

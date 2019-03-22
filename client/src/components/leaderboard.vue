@@ -10,12 +10,15 @@
                 </button>
             </div>
             <div class="modal-body">
-
                 <div class="card-body">
                 <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    1.Cras justo odio
-                    <span class="badge badge-primary badge-pill">14</span>
+                <li v-for="(player, index) in listPlayers" :key="index" class="list-group-item d-flex justify-content-between align-items-center">
+                    {{(index + 1)}}. {{player.name}}
+                    <span style="cursor: default">
+                    <span class="badge badge-primary badge-pill mr-2">{{player.score}}</span>   
+                    <span v-if="player.status" class="badge badge-success badge-pill">online</span>
+                    <span v-if="!player.status" class="badge badge-light badge-pill">offline</span>
+                    </span>
                 </li>
                 </ul>
             </div>
@@ -28,3 +31,34 @@
         </div>
     </div>
 </template>
+
+<script>
+
+import db from '@/api/firebase.js'
+
+export default {
+    data(){
+        return {
+            listPlayers: []
+        }
+    },
+    created(){
+        db.collection("Users")
+            .onSnapshot((querySnapshot) => {
+                this.listPlayers = []
+                querySnapshot.forEach(doc => {
+                    this.listPlayers.push({
+                        name: doc.id,
+                        score: doc.data().score,
+                        status: doc.data().status
+                    })
+                });
+                this.listPlayers = this.listPlayers.sort((before, after) => after.score - before.score)
+                this.listPlayers = this.listPlayers.slice(0, 9)
+            }, (error) => {
+                console.log(error)
+            });
+    }
+}
+
+</script>
